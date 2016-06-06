@@ -75,8 +75,12 @@ public class AccountResource {
 			log.error("Error persisting account information.", ex);
 			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
 		} catch (ValidationException ex) {
-			//TODO Give more details in the error response.
+			log.error("Error validating account.", ex);
+			//TODO Give more authenticated in the error response.
 			throw new WebApplicationException(ex, Response.Status.BAD_REQUEST);
+		} catch (Exception ex) {
+			log.error("Error creating account.", ex);
+			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

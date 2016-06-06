@@ -1,6 +1,7 @@
 package com.portlandwebworks.chhs.authentication;
 
 import com.portlandwebworks.chhs.accounts.Account;
+import java.util.Arrays;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.security.core.Authentication;
@@ -17,7 +18,7 @@ public class AuthenticationDetailsProvider {
 	@PersistenceContext
 	private EntityManager em;
 
-	public AuthenticationDetails details() {
+	public AuthenticationDetails authenticated() {
 		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null && auth.isAuthenticated()) {
 			return (AuthenticationDetails) auth.getPrincipal();
@@ -27,12 +28,19 @@ public class AuthenticationDetailsProvider {
 	}
 
 	public Account currentAccount() {
-		AuthenticationDetails authDetails = details();
+		AuthenticationDetails authDetails = authenticated();
 		if (authDetails != null) {
 			return em.find(Account.class, authDetails.getAccountId());
 		} else {
 			return null;
 		}
+	}
+
+	public AuthenticationDetails forToken(String token) {
+		Account a = em.createQuery("SELECT a FROM Account a WHERE a.id = (SELECT t.accountId FROM Token t WHERE t.token = :token)", Account.class)
+				.setParameter("token", token)
+				.getSingleResult();
+		return new AuthenticationDetails(a.getId(), a.getEmail(), token, Arrays.asList("ROLE_USER"));
 	}
 
 }

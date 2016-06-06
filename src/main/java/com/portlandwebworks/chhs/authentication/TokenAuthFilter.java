@@ -26,8 +26,9 @@ public class TokenAuthFilter extends AbstractPreAuthenticatedProcessingFilter {
 	protected Object getPreAuthenticatedPrincipal(HttpServletRequest hsr) {
 		log.trace("Checking for pre-auth cookie value.");
 		if (hsr.getHeader(TOKEN_NAME) != null) {
-			log.trace("Header for pre-auth found.");
-			return hsr.getHeader(TOKEN_NAME);
+			String token = hsr.getHeader(TOKEN_NAME);
+			log.debug("Header for pre-auth found {}.", token);
+			return token;
 		}
 		log.trace("No preauth token foundfound.");
 		return null;

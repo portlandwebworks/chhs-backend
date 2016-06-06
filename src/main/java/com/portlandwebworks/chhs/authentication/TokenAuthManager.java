@@ -34,7 +34,7 @@ public class TokenAuthManager implements AuthenticationManager {
 	@Override
 	public Authentication authenticate(Authentication a) throws AuthenticationException {
 		try {
-			log.trace("Trying to determin if token {} is valid.", a.getPrincipal());
+			log.debug("Trying to determine if token {} is valid.", a.getPrincipal());
 			Token t = em.createNamedQuery(Token.Q_FIND_BY_TOKEN, Token.class)
 					.setParameter("token", a.getPrincipal())
 					.getSingleResult();
@@ -42,14 +42,14 @@ public class TokenAuthManager implements AuthenticationManager {
 			//TODO: Check if token expired
 			log.trace("Found token, determing if still valid.");
 			
-			log.trace("Token valid, returning user info.");
+			log.debug("Token valid, returning user info.");
 			String email = em.createNamedQuery(Account.Q_EMAIL_BY_ID, String.class)
 					.setParameter("id", t.getAccountId())
 					.getSingleResult();
 			//TODO: Verify user account still valid and active.
 
 			//TODO: Load roles
-			AuthenticationDetails details = new AuthenticationDetails(t.getAccountId(), email, Arrays.asList("ROLES_USER"));
+			AuthenticationDetails details = new AuthenticationDetails(t.getAccountId(), email, t.getToken(), Arrays.asList("ROLES_USER"));
 			return new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());
 		} catch (NoResultException ex) {
 			throw new TokenNotFoundException("Invalid token given.");
