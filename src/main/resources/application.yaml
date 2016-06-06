@@ -1,0 +1,16 @@
+server:
+    port: 8090
+
+spring:
+    datasource:
+        test-on-borrow: true
+        validation-query: SELECT 1;
+    jpa:
+        hibernate:
+            ddl-auto: none
+            ejb:
+                interceptor: com.portlandwebworks.chhs.audit.UserAuditor
+
+liquibase:
+    changeLog: "classpath:db/changelog/db.changelog-master.xml"
+      
