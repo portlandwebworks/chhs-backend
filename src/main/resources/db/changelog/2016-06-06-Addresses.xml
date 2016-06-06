@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="Create Address Table" author="Nick Stuart(nick@portlandwebworks.com)">
+    <createTable tableName="addresses">
+      <column name="id" type="integer" autoIncrement="true">
+        <constraints primaryKey="true" primaryKeyName="accounts_pk"/>
+      </column>
+      <column name="version" type="integer"/>
+      <column name="created_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="updated_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="${emailType}"/>
+      <column name="updated_by" type="${emailType}"/>
+      
+      <column name="city" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="state" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="postal_code" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="country" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="street" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="Add Address Id Column" author="Nick Stuart(nick@portlandwebworks.com)">
+    <addColumn tableName="accounts"> 
+      <column name="address_id" type="integer">
+        <constraints foreignKeyName="account_address_fk" referencedColumnNames="id" referencedTableName="addresses"/>
+      </column>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>

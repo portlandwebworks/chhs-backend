@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="Create Account Table" author="Nick Stuart(nick@portlandwebworks.com)">
+    <createTable tableName="accounts">
+      <column name="id" type="integer" autoIncrement="true">
+        <constraints primaryKey="true" primaryKeyName="accounts_pk"/>
+      </column>
+      <column name="version" type="integer"/>
+      <column name="created_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="updated_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="${emailType}"/>
+      <column name="updated_by" type="${emailType}"/>
+      
+      <column name="first_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="email" type="${emailType}">
+        <constraints nullable="false" unique="true" uniqueConstraintName="accounts_email_unq"/>
+      </column>
+      <column name="hashed_password" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  
+  <changeSet id="Add Email Index" author="Nick Stuart(nick@portlandwebworks.com)">
+    <createIndex tableName="accounts" indexName="account_email_idx">
+      <column name="email"/>
+    </createIndex>
+  </changeSet>
+  
+  <changeSet id="Create Token Table" author="Nick Stuart(nick@portlandwebworks.com)">
+    <createTable tableName="authentication_tokens">
+      <column name="id" type="integer" autoIncrement="true">
+        <constraints primaryKey="true" primaryKeyName="accounts_pk"/>
+      </column>
+      <column name="version" type="integer"/>
+      <column name="created_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="updated_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="${emailType}"/>
+      <column name="updated_by" type="${emailType}"/>
+      
+      <column name="token" type="varchar(100)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="authentication_token_unq"/>
+      </column>
+      <column name="account_id" type="integer">
+        <constraints nullable="false" foreignKeyName="token_account_fk" referencedTableName="accounts" referencedColumnNames="id"/>
+      </column>
+      <column name="expires_at" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  
+   <changeSet id="Add Token User Index" author="Nick Stuart(nick@portlandwebworks.com)">
+    <createIndex tableName="authentication_tokens" indexName="authentication_tokens_account_id_idx">
+      <column name="account_id"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

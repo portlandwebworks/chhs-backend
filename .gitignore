@@ -1,0 +1,17 @@
+# IDE files
+.idea
+*.iml
+*.ipr
+*.iws
+nb-configuration.xml
+
+# System files
+.DS_Store
+thumbs.db
+
+# Build artifacts
+target
+
+
+application.yaml
+/nbproject/
