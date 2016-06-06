@@ -18,10 +18,10 @@ and open the template in the editor.
         <constraints primaryKey="true" primaryKeyName="accounts_pk"/>
       </column>
       <column name="version" type="integer"/>
-      <column name="created_at" type="timestamp">
+      <column name="created_at" type="timestamp" defaultValueDate="${now}">
         <constraints nullable="false"/>
       </column>
-      <column name="updated_at" type="timestamp">
+      <column name="updated_at" type="timestamp" defaultValueDate="${now}">
         <constraints nullable="false"/>
       </column>
       <column name="created_by" type="${emailType}"/>

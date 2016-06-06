@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 /**
@@ -33,6 +34,7 @@ public class AccountCreator {
 		this.verifier = verifier;
 	}
 
+	@Transactional
 	public void createAccount(Account account) {
 		log.info("Creating new user account with email of: {}", account.getEmail());
 		verifier.valid(account.getNewPassword(), account.getNewPasswordConfirmation());
