@@ -1,0 +1,25 @@
+language: java
+jdk:
+  - oraclejdk8
+services:
+  - docker
+cache:
+  directories:
+  - $HOME/.m2
+sudo: false
+install: true
+script: mvn package
+env:
+  global:
+  - secure: kgErTRdbAH+SIrm/xT/bYRtzGJJF7rqWNLPbgZUomIawPIw6r1eGZwi0+D6TEyAT/8HQ+rjfK4TCs3fNL65rjMcX7WOTkt0QiN1u0VhZsZI0c/2mT+Cj7zkf0ufEhiR/y8HjpFpuqHq5ISGivy5taxRRmj+G7wRha1om3wufI2xUKVf58gqBYPx7fODTAQKTc58HjwVBi9iT91qGZ5yXbCEUUgV5WLwZ5LwGLXDgNCqpk/GlZMi6owRZxz71AAzMSi35ENfOsHRr9iFD6+tQmiZG7UZbn4vfLlncd8nF256pZFI6PMaV4uPFoSsSLiHhHo4LhRjdjCB7pA3ybbURL6RyD3fE9qauwnDPCiIQ1wzCuqTH0RWp8a7jq4oeXlbQnsrw3ePc6AWZOO8JiBBdseIB6Glt0BYMImx1eoBpZF4yfiRs9SgWXZ61PdUJZv7agw7WdpDSBGOWid2k/6in5ZqxOAA64rB6nT2eG25v/ba5E4x1UdS0OmiRf8sMTbjUxbrkz0yL03nrerLCMmKIIpF9lszrW6vNr9YXZ4PQUNER0EDpPO6CH94VWtw4MfgKIeqju8dmKZxn1OPX1KsJ459ucTWzRbwUufE3FnQlHfKcd2Jxp8r5bWtKzc1FZ8pZNB5CuzlTqKzZLymWAa1DKcY/WWNMr6fUxDM/+ZNp7Vs= # DOCKER_EMAIL
+  - secure: EFF0bcK3hIxo8jmL9spzP+Rh1L0guCXgE3gR3AWiKMiFQ4VpfYEON/6HhXG29PCg7uhzgGKN51rRx+PcV2vmzvXQ+4tmqkPSlpQtYHcYkBa48wgM4aSOWEEn9fCz4V9lvzwioHoMGKL3TEysu3hopf5LoZ6gJTo69YpVWVt6saNtSffo5SFQKgsKiJlBrENHGGTOeuBrjqWGnXC9ny+E1njb5V4edRSsHCNgF69MbDI/z4j5WZ07dpwi1Sk06Nwr05xMSAj845hjs9tWTKV+PBOj2URCvhzbKcbLSpk8LeSC6qP8U8+ozDJHPu0yIsSKalJHX0QRIsNsGRsRUpJnS+XAYDqo+Ke/y8kn1u2MgT/hqk5CHvcq+9Ksr1exoKbvhxd/Q+VkDw1bGx6rtcx/CDdRQGoUF31gUHv6HsyPB+MHVq20ZvCPcrG5/0jbdPeEykhmMyHq8OdzSKwcAZ1m4yYHyP/5/jgKHdor2ny4KYytG2RW3Sl028/pHSRQjlxNd6D4aaLZKOtgQ5duqnlTnktWwm3TmHckmeyhZ667cuoxomLEuqpfp5kokzuHLTB5XE7s/lsiZ6h60uF8sF3BkHZyBje7KiwwBAMS2HAnuvCEdiOTLZfZYKp/k5LiKsue/R75onr9P0KrJEfrEnv33kf9C+p/Hyt1Qp40wuk++yw= # DOCKER_USER
+  - secure: Gva0y735kk79YDTOQeU1Y0Mnql2A5dsKeifb9giVXh+rHTdQTnRSeRgQiRc78vi7On5Q2Lz4Imseda7ycuGDVQqZITQUDmXt8UBZbcA0JVmm7zyGez3a4BL1pWOIdpWjSa2+qPWYMUCZf9+0dEDkWmgrWUAH0R86eBRZpKEmK/XJ7aBGUnUoYWjP4RS5OWKKbiMEIaCtNqeJ8d8RBgvNfmmB5ND+/qZb0fMPW6n3/tcldUh7LL+y83P+wHR9mG9lo8l1kyBAz28VoKfXPh6IBRocMp7y48Hcq1QpXZaTi2+LrEriSuIWzmG+GR2QtsGyPTmiITKbrM8u7cRnzr/j1gkJdeZjkd2Z96lnesWjHIGPNYJ+zoR827CuGCVgHHQyWqE2ZsbvK7lgK+IS5G9KWWCGYnk+M4RgTVZJMwdjABKS1Zv5oA4FD9oYTVK6LUfcKdEirhGXhaob4EfPIw2i1q2wZVYtEkm9P9gD7tUS9L2F989D3We0out4flqQ0ZBEJFMDhYsDKOjmI5BB5U3al92a7xbXcK8lYxsthVa2kuavR7ZTm8cxjY4WP0yBbU3QXbCr0AExG9ONtsoJDAfLMZ1f2j0iC/u400nT3szDVH55TnZLvF7EL4asQm+Zl/0IaHrNITg3c+RGKxvr6FKC8Wj40ZyxtKLS6+GDiUV3QBo= # DOCKER_PASS
+
+after_success:
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - export REPO=portlandwebworks/chhs-backend
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - mvn docker:build
+  - docker tag $REPO $REPO:$TAG
+  - docker tag $REPO $REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker push $REPO
