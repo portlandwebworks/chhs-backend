@@ -2,6 +2,7 @@ package com.portlandwebworks.chhs.messages.beans;
 
 import com.portlandwebworks.chhs.authentication.AuthenticationDetails;
 import com.portlandwebworks.chhs.authentication.AuthenticationDetailsProvider;
+import com.portlandwebworks.chhs.messages.MessageCreatedEvent;
 import com.portlandwebworks.chhs.messages.MessageDTO;
 import com.portlandwebworks.chhs.messages.model.Message;
 import javax.persistence.EntityManager;
@@ -11,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.easymock.EasyMock.*;
+import org.springframework.context.ApplicationEventPublisher;
 
 /**
  *
@@ -21,6 +23,7 @@ public class MessageSaverTest {
 	private EntityManager em;
 	private AuthenticationDetailsProvider provider;
 	private MessageDTOConverter converter;
+	private ApplicationEventPublisher publisher;
 	private MessageSaver saver;
 
 	public MessageSaverTest() {
@@ -31,7 +34,8 @@ public class MessageSaverTest {
 		em = createMock(EntityManager.class);
 		provider = createMock(AuthenticationDetailsProvider.class);
 		converter = createMock(MessageDTOConverter.class);
-		saver = new MessageSaver(provider, converter);
+		publisher = createMock(ApplicationEventPublisher.class);
+		saver = new MessageSaver(provider, converter, publisher);
 		saver.setEm(em);
 	}
 
@@ -49,6 +53,8 @@ public class MessageSaverTest {
 		expect(em.createQuery("SELECT a.id FROM Account a WHERE a.email = :email", Integer.class)).andReturn(iQuery);
 		expect(iQuery.setParameter("email", dto.getToEmail())).andReturn(iQuery);
 		expect(iQuery.getSingleResult()).andReturn(2);
+		publisher.publishEvent(isA(MessageCreatedEvent.class));
+		expectLastCall().once();
 
 		Capture<Message> capMsg = Capture.newInstance();
 		em.persist(capture(capMsg));
