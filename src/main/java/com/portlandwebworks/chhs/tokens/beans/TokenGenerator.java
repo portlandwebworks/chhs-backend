@@ -1,5 +1,6 @@
-package com.portlandwebworks.chhs.tokens;
+package com.portlandwebworks.chhs.tokens.beans;
 
+import com.portlandwebworks.chhs.tokens.model.Token;
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.EntityManager;

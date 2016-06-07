@@ -1,5 +1,7 @@
 package com.portlandwebworks.chhs.tokens;
 
+import com.portlandwebworks.chhs.tokens.beans.PasswordChecker;
+import com.portlandwebworks.chhs.tokens.beans.TokenGenerator;
 import com.portlandwebworks.chhs.authentication.AuthenticationDetails;
 import com.portlandwebworks.chhs.authentication.AuthenticationDetailsProvider;
 import io.swagger.annotations.Api;

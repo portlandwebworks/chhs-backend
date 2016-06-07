@@ -1,4 +1,4 @@
-package com.portlandwebworks.chhs.accounts;
+package com.portlandwebworks.chhs.accounts.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.portlandwebworks.chhs.BasePersistable;

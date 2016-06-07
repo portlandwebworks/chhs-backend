@@ -1,4 +1,4 @@
-package com.portlandwebworks.chhs.tokens;
+package com.portlandwebworks.chhs.tokens.model;
 
 import com.portlandwebworks.chhs.BasePersistable;
 import java.util.Date;

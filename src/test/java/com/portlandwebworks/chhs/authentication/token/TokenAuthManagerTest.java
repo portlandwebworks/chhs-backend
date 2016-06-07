@@ -1,7 +1,10 @@
-package com.portlandwebworks.chhs.authentication;
+package com.portlandwebworks.chhs.authentication.token;
 
-import com.portlandwebworks.chhs.accounts.Account;
-import com.portlandwebworks.chhs.tokens.Token;
+import com.portlandwebworks.chhs.authentication.token.TokenNotFoundException;
+import com.portlandwebworks.chhs.authentication.token.TokenAuthManager;
+import com.portlandwebworks.chhs.accounts.model.Account;
+import com.portlandwebworks.chhs.authentication.AuthenticationDetails;
+import com.portlandwebworks.chhs.tokens.model.Token;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.portlandwebworks.chhs.authentication;
+package com.portlandwebworks.chhs.authentication.token;
 
 import org.springframework.security.core.AuthenticationException;
 

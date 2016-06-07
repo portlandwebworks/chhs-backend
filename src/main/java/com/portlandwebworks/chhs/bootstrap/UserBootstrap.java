@@ -1,9 +1,9 @@
 package com.portlandwebworks.chhs.bootstrap;
 
-import com.portlandwebworks.chhs.accounts.Account;
-import com.portlandwebworks.chhs.accounts.AccountCreator;
-import com.portlandwebworks.chhs.accounts.Address;
-import com.portlandwebworks.chhs.accounts.PasswordVerifier;
+import com.portlandwebworks.chhs.accounts.model.Account;
+import com.portlandwebworks.chhs.accounts.beans.AccountCreator;
+import com.portlandwebworks.chhs.accounts.model.Address;
+import com.portlandwebworks.chhs.accounts.beans.PasswordVerifier;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

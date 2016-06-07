@@ -1,6 +1,6 @@
 package com.portlandwebworks.chhs.authentication;
 
-import com.portlandwebworks.chhs.accounts.Account;
+import com.portlandwebworks.chhs.accounts.model.Account;
 import java.util.Arrays;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

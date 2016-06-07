@@ -1,4 +1,4 @@
-package com.portlandwebworks.chhs.accounts;
+package com.portlandwebworks.chhs.accounts.model;
 
 import com.portlandwebworks.chhs.BasePersistable;
 import javax.persistence.Entity;

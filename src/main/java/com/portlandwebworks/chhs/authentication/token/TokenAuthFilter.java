@@ -1,4 +1,4 @@
-package com.portlandwebworks.chhs.authentication;
+package com.portlandwebworks.chhs.authentication.token;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

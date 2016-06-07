@@ -1,5 +1,6 @@
 package com.portlandwebworks.chhs.authentication;
 
+import com.portlandwebworks.chhs.authentication.token.TokenAuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

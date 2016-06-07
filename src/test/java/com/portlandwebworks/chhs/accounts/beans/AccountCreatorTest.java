@@ -1,5 +1,8 @@
-package com.portlandwebworks.chhs.accounts;
+package com.portlandwebworks.chhs.accounts.beans;
 
+import com.portlandwebworks.chhs.accounts.beans.AccountCreator;
+import com.portlandwebworks.chhs.accounts.beans.PasswordVerifier;
+import com.portlandwebworks.chhs.accounts.model.Account;
 import javax.persistence.EntityManager;
 import javax.validation.ValidationException;
 import javax.ws.rs.WebApplicationException;

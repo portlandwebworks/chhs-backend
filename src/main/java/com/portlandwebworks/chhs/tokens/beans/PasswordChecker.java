@@ -1,4 +1,4 @@
-package com.portlandwebworks.chhs.tokens;
+package com.portlandwebworks.chhs.tokens.beans;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -43,6 +43,9 @@ public class PasswordChecker {
 			log.info("Could not find valid user for account.");
 			throw new WebApplicationException(Response.Status.BAD_REQUEST);
 		}
+	}
 
+	void setEm(EntityManager em) {
+		this.em = em;
 	}
 }

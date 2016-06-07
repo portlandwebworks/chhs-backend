@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.portlandwebworks.chhs.authentication;
+package com.portlandwebworks.chhs.authentication.token;
 
+import com.portlandwebworks.chhs.authentication.token.TokenAuthFilter;
 import javax.servlet.http.HttpServletRequest;
 import org.easymock.EasyMock;
 import org.junit.Before;

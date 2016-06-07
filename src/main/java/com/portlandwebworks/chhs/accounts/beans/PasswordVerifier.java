@@ -1,4 +1,4 @@
-package com.portlandwebworks.chhs.accounts;
+package com.portlandwebworks.chhs.accounts.beans;
 
 import java.util.Objects;
 import java.util.regex.Pattern;

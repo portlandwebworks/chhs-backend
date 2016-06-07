@@ -1,5 +1,6 @@
-package com.portlandwebworks.chhs.accounts;
+package com.portlandwebworks.chhs.accounts.beans;
 
+import com.portlandwebworks.chhs.accounts.beans.PasswordVerifier;
 import javax.validation.ValidationException;
 import org.junit.Before;
 import org.junit.Test;

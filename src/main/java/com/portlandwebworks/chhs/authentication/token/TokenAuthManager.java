@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.portlandwebworks.chhs.authentication;
+package com.portlandwebworks.chhs.authentication.token;
 
-import com.portlandwebworks.chhs.accounts.Account;
-import com.portlandwebworks.chhs.tokens.Token;
+import com.portlandwebworks.chhs.accounts.model.Account;
+import com.portlandwebworks.chhs.authentication.AuthenticationDetails;
+import com.portlandwebworks.chhs.tokens.model.Token;
 import java.util.Arrays;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
