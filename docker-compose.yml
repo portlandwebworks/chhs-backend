@@ -1,0 +1,28 @@
+chhs-mysql:
+  image: mysql:5.6
+  ports:
+    - "3306:3306"
+  environment:
+    - MYSQL_DATABASE=chhs_development
+    - MYSQL_USER=myusername
+    - MYSQL_PASSWORD=mypassword
+    - MYSQL_ROOT_PASSWORD=rootpassword
+
+chhs-backend:
+  image: portlandwebworks/chhs-backend:latest
+  # instead of using image, you can also have it build from target dir
+  # build: target/docker
+  ports:
+    - "8090:8090"
+  environment:
+    - SPRING_DATASOURCE_URL=jdbc:mysql://chhs-mysql:3306/chhs_development?characterEncoding=UTF-8
+    - SPRING_DATASOURCE_USERNAME=myusername
+    - SPRING_DATASOURCE_PASSWORD=mypassword
+    - SPRING_PROFILES_ACTIVE=
+  links:
+    - chhs-mysql
+
+chhs-frontend:
+  image: portlandwebworks/chhs-frontend:latest
+  ports:
+    - "8080:8080"
