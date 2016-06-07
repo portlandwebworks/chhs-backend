@@ -12,4 +12,5 @@
   
   <include file="2016-06-03-Accounts.xml" relativeToChangelogFile="true"/>
   <include file="2016-06-06-Addresses.xml" relativeToChangelogFile="true"/>
+  <include file="2016-06-07-Messages.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

@@ -3,18 +3,12 @@ package com.portlandwebworks.chhs.accounts.beans;
 import com.portlandwebworks.chhs.accounts.model.Account;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.validation.ValidationException;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 /**
  *

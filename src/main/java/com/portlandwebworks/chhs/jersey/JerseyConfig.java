@@ -2,6 +2,7 @@ package com.portlandwebworks.chhs.jersey;
 
 import com.portlandwebworks.chhs.accounts.AccountResource;
 import com.portlandwebworks.chhs.accounts.CaseWorkerResource;
+import com.portlandwebworks.chhs.messages.MessagesResource;
 import com.portlandwebworks.chhs.tokens.TokenResource;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
@@ -24,6 +25,7 @@ public class JerseyConfig extends ResourceConfig {
 		this.register(AccountResource.class);
 		this.register(TokenResource.class);
 		this.register(CaseWorkerResource.class);
+		this.register(MessagesResource.class);
 		configureSwagger();
 	}
 

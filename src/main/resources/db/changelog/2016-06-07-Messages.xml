@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="Create Messages Table" author="Nick Stuart(nick@portlandwebworks.com)">
+    <createTable tableName="messages">
+      <column name="id" type="integer" autoIncrement="true">
+        <constraints primaryKey="true" primaryKeyName="accounts_pk"/>
+      </column>
+      <column name="version" type="integer"/>
+      <column name="created_at" type="timestamp" defaultValueDate="${now}">
+        <constraints nullable="false"/>
+      </column>
+      <column name="updated_at" type="timestamp" defaultValueDate="${now}">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="${emailType}"/>
+      <column name="updated_by" type="${emailType}"/>
+      
+      <column name="subject" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="content" type="varchar(4000)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="from_user_id" type="integer">
+        <constraints nullable="false" foreignKeyName="message_from_user_id_fk" referencedColumnNames="id" referencedTableName="accounts"/>
+      </column>
+      <column name="to_user_id" type="integer">
+        <constraints nullable="false" foreignKeyName="message_to_user_id_fk" referencedColumnNames="id" referencedTableName="accounts"/>
+      </column>
+      <column name="reply_to_id" type="integer">
+        <constraints foreignKeyName="message_reply_to_id_fk" referencedColumnNames="id" referencedTableName="messages"/>
+      </column>
+      <column name="deleted" type="boolean" defaultValueBoolean="false"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="Add Message FK Id Index" author="Nick Stuart(nick@portlandwebworks.com)">
+    <createIndex tableName="messages" indexName="from_user_id_idx">
+      <column name="from_user_id"/>
+    </createIndex>
+    <createIndex tableName="messages" indexName="to_user_id_idx">
+      <column name="to_user_id"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>
