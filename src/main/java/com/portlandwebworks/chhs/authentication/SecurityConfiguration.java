@@ -28,6 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers(HttpMethod.GET, "/api/swagger.json").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/token").anonymous()
+				.antMatchers(HttpMethod.GET, "/api/account/available").anonymous()
 				.antMatchers(HttpMethod.POST, "/api/account").anonymous()
 				.antMatchers("/api/**").authenticated()
 				.and()

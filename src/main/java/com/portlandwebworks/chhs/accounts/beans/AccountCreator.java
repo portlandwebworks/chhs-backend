@@ -44,6 +44,12 @@ public class AccountCreator {
 		log.debug("Persisting account: {}", account.getEmail());
 		em.persist(account);
 	}
+	
+	public boolean emailAvailable(String email){
+		return em.createQuery("SELECT COUNT(a.id) FROM Account a WHERE a.email = :email", Long.class)
+				.setParameter("email", email)
+				.getSingleResult() == 0;
+	}
 
 	void setEm(EntityManager em) {
 		this.em = em;

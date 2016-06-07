@@ -20,6 +20,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -65,6 +66,21 @@ public class AccountResource {
 	@GET
 	public Account accountInfo() {
 		return provider.currentAccount();
+	}
+	
+	@ApiOperation(value = "Validates if an email is available for use.")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "If email address is available for use."),
+		@ApiResponse(code = 409, message = "If email address is already used..")
+	})
+	@GET
+	@Path("/available")
+	public Response availableEmail(@ApiParam(name = "email") @QueryParam("email") String email){
+		if(accountCreator.emailAvailable(email)){
+			return Response.ok().build();
+		}else{
+			return Response.status(Response.Status.CONFLICT).build();
+		}
 	}
 
 	@ApiOperation("Create a new account.")
