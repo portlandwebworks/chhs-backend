@@ -20,7 +20,7 @@ public class AuthenticationDetailsProvider {
 
 	public AuthenticationDetails authenticated() {
 		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth != null && auth.isAuthenticated()) {
+		if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof AuthenticationDetails) {
 			return (AuthenticationDetails) auth.getPrincipal();
 		} else {
 			return null;
