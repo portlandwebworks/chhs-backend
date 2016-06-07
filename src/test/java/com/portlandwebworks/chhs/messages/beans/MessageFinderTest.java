@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.portlandwebworks.chhs.messages.beans;
 
 import com.portlandwebworks.chhs.authentication.AuthenticationDetails;
@@ -46,10 +41,11 @@ public class MessageFinderTest {
 		AuthenticationDetails details = new AuthenticationDetails(1, "t@t.com", "", null);
 		expect(provider.authenticated()).andReturn(details);
 		TypedQuery<Message> mQuery = createMock(TypedQuery.class);
-		expect(em.createQuery("SELECT m FROM Message m WHERE (m.fromUserId = :fromId OR m.toUserId = :toId) AND m.deleted = false ORDER BY m.id", Message.class))
+		expect(em.createQuery("SELECT m FROM Message m WHERE (m.fromUserId = :fromId OR m.toUserId = :toId) AND m.id NOT IN (SELECT d.messageId FROM DeletedMessage d WHERE d.forUserId = :deletedUserId) ORDER BY m.id", Message.class))
 				.andReturn(mQuery);
 		expect(mQuery.setParameter("toId", details.getAccountId())).andReturn(mQuery);
 		expect(mQuery.setParameter("fromId", details.getAccountId())).andReturn(mQuery);
+		expect(mQuery.setParameter("deletedUserId", details.getAccountId())).andReturn(mQuery);
 		
 		final Message msg = new Message();
 		final MessageDTO dto = new MessageDTO();

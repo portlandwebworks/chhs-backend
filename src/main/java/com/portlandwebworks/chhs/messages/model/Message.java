@@ -11,13 +11,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "messages")
 public class Message extends BasePersistable {
-	
+
 	private String subject;
 	private String content;
 	private Integer replyToId;
 	private Integer toUserId;
 	private Integer fromUserId;
-	private boolean deleted;
 
 	public String getSubject() {
 		return subject;
@@ -59,11 +58,4 @@ public class Message extends BasePersistable {
 		this.fromUserId = fromUserId;
 	}
 
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
 }

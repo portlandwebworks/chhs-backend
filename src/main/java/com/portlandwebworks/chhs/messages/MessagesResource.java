@@ -1,17 +1,19 @@
 package com.portlandwebworks.chhs.messages;
 
+import com.portlandwebworks.chhs.messages.beans.MessageDeleter;
 import com.portlandwebworks.chhs.messages.beans.MessageFinder;
 import com.portlandwebworks.chhs.messages.beans.MessageSaver;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -34,11 +36,13 @@ public class MessagesResource {
 	
 	private final MessageSaver saver;
 	private final MessageFinder finder;
+	private final MessageDeleter deleter;
 
 	@Autowired
-	public MessagesResource(MessageSaver saver, MessageFinder finder) {
+	public MessagesResource(MessageSaver saver, MessageFinder finder, MessageDeleter deleter) {
 		this.saver = saver;
 		this.finder = finder;
+		this.deleter = deleter;
 	}
 	
 	@ApiOperation("Post a new message, from items automatically filled in with authenticated user details.")
@@ -51,7 +55,6 @@ public class MessagesResource {
 		return Response.ok(saver.saveMessage(newMessage)).build();
 	}
 	
-	
 	@ApiOperation("Allows user to retrieve all messages that are either from them or to them, sorted by create order.")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "List of messages for authenticated user.")
@@ -60,6 +63,18 @@ public class MessagesResource {
 	@Transactional
 	public List<MessageDTO> getMessages(){
 		return finder.getMessages();
+	}
+	@ApiOperation("Delete a message. Only allows deleting of messages from users inbox and will not remove actual message.")
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "List of messages for authenticated user.")
+	})
+	
+	@DELETE
+	@Path("/{messageId}")
+	@Transactional
+	public Response delete(@PathParam("messageId") Integer msgId){
+		deleter.deleteMessage(msgId);
+		return Response.status(Response.Status.OK).build();
 	}
 	
 }

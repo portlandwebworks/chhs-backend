@@ -54,4 +54,39 @@ and open the template in the editor.
       <column name="to_user_id"/>
     </createIndex>
   </changeSet>
+  
+  <changeSet id="Create Deleted Messages Table" author="Nick Stuart(nick@portlandwebworks.com)">
+    <createTable tableName="messages_deleted">
+      <column name="id" type="integer" autoIncrement="true">
+        <constraints primaryKey="true" primaryKeyName="accounts_pk"/>
+      </column>
+      <column name="version" type="integer"/>
+      <column name="created_at" type="timestamp" defaultValueDate="${now}">
+        <constraints nullable="false"/>
+      </column>
+      <column name="updated_at" type="timestamp" defaultValueDate="${now}">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_by" type="${emailType}"/>
+      <column name="updated_by" type="${emailType}"/>
+      
+      <column name="for_user_id" type="integer">
+        <constraints nullable="false" foreignKeyName="message_deleted_for_user_id_fk" referencedColumnNames="id" referencedTableName="accounts"/>
+      </column>
+      <column name="message_id" type="integer">
+        <constraints foreignKeyName="message_deleted_message_id_fk" referencedColumnNames="id" referencedTableName="messages"/>
+      </column>
+    </createTable>
+  </changeSet>
+  
+  <changeSet id="Created deleted message index" author="Nick Stuart(nick@portlandwebworks.com)">
+    <createIndex tableName="messages_deleted" indexName="messages_deleted_for_user_idx">
+      <column name="for_user_id"/>
+    </createIndex>
+  </changeSet>
+  
+  <changeSet id="Drop Deleted Column" author="Nick Stuart(nick@portlandwebworks.com)">
+    <dropColumn tableName="messages" columnName="deleted"/>
+  </changeSet>
+  
 </databaseChangeLog>

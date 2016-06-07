@@ -1,5 +1,6 @@
 package com.portlandwebworks.chhs.messages;
 
+import io.swagger.annotations.ApiModel;
 import java.util.Date;
 
 /**
@@ -8,6 +9,7 @@ import java.util.Date;
  * 
  * @author nick
  */
+@ApiModel(value = "Message")
 public class MessageDTO {
 	
 	private Integer id;
