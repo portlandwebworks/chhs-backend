@@ -1,5 +1,6 @@
 package com.portlandwebworks.chhs.messages.beans;
 
+import com.portlandwebworks.chhs.messages.MessageCreatedEvent;
 import com.portlandwebworks.chhs.authentication.AuthenticationDetails;
 import com.portlandwebworks.chhs.authentication.AuthenticationDetailsProvider;
 import com.portlandwebworks.chhs.messages.MessageDTO;
@@ -7,6 +8,7 @@ import com.portlandwebworks.chhs.messages.model.Message;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,13 +22,16 @@ public class MessageSaver {
 	private EntityManager em;
 	private final AuthenticationDetailsProvider detail;
 	private final MessageDTOConverter converter;
+	private final ApplicationEventPublisher eventPublisher;
 
 	@Autowired
-	public MessageSaver(AuthenticationDetailsProvider detail, MessageDTOConverter converter) {
+	public MessageSaver(AuthenticationDetailsProvider detail, MessageDTOConverter converter, ApplicationEventPublisher eventPublisher) {
 		this.detail = detail;
 		this.converter = converter;
+		this.eventPublisher = eventPublisher;
 	}
 
+	
 	public MessageDTO saveMessage(MessageDTO newMsg) {
 		AuthenticationDetails authenticated = detail.authenticated();
 		Message msg = new Message();
@@ -36,6 +41,7 @@ public class MessageSaver {
 		msg.setContent(newMsg.getContent());
 		msg.setReplyToId(newMsg.getInReplyToId());
 		em.persist(msg);
+		eventPublisher.publishEvent(new MessageCreatedEvent(msg));
 		return converter.fromMessage(msg);
 	}
 
