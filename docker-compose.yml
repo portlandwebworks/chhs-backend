@@ -10,10 +10,10 @@ chhs-mysql:
 
 chhs-backend:
   image: portlandwebworks/chhs-backend:latest
-  # instead of using image, you can also have it build from target dir
+  # instead of using image, you can specify build dir
   # build: target/docker
   ports:
-    - "8090:8090"
+    - "8099:8090"
   environment:
     - SPRING_DATASOURCE_URL=jdbc:mysql://chhs-mysql:3306/chhs_development?characterEncoding=UTF-8
     - SPRING_DATASOURCE_USERNAME=myusername
@@ -26,3 +26,7 @@ chhs-frontend:
   image: portlandwebworks/chhs-frontend:latest
   ports:
     - "8080:8080"
+  environment:
+    - BACKEND_URL=http://chhs-backend:8090
+  links:
+    - chhs-backend
