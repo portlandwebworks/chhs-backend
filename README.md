@@ -1,4 +1,6 @@
-# chhs-backend [![Build Status](https://travis-ci.org/portlandwebworks/chhs-backend.svg?branch=develop)](https://travis-ci.org/portlandwebworks/chhs-backend)
+# chhs-backend
+
+WARNING: This repository is no longer maintained and has been pulled into https://github.com/portlandwebworks/chhs-prototype
 
 ***Requirements:***
 
